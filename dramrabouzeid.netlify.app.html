@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Amr AbouZeid – Professor of Pediatric Surgery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#f0f4f8', 100:'#d9e2ec', 200:'#bcccdc', 300:'#9fb3c8', 400:'#829ab1', 500:'#627d98', 600:'#486581', 700:'#334e68', 800:'#243b53', 900:'#102a43' },
+            teal:  { 50:'#effcf6', 100:'#c6f7e2', 200:'#8eedc7', 300:'#65d6ad', 400:'#3ebd93', 500:'#27ab83', 600:'#199473', 700:'#147d64', 800:'#0c6b58', 900:'#014d40' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Geometric BG */
+    .hero-geo {
+      background: linear-gradient(135deg, #102a43 0%, #1a3a5c 40%, #0c6b58 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-geo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(39,171,131,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-geo::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 60%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(201,227,246,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Grid pattern overlay */
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Floating shapes */
+    .float-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.07;
+      background: white;
+    }
+    .float-shape.square {
+      border-radius: 12px;
+      transform: rotate(45deg);
+    }
+
+    /* 3D Book effect */
+    .book-3d {
+      perspective: 800px;
+      transform-style: preserve-3d;
+    }
+    .book-3d-inner {
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      transform: rotateY(-8deg) rotateX(2deg);
+    }
+    .book-3d:hover .book-3d-inner {
+      transform: rotateY(0deg) rotateX(0deg) translateY(-8px);
+    }
+    .book-spine {
+      position: absolute;
+      left: -14px;
+      top: 3px;
+      width: 14px;
+      height: calc(100% - 6px);
+      background: linear-gradient(to right, #0c6b58, #147d64);
+      transform: rotateY(-90deg);
+      transform-origin: right center;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* Timeline line */
+    .timeline-line {
+      position: absolute;
+      left: 19px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #27ab83, #102a43);
+    }
+    @media (min-width: 768px) {
+      .timeline-line { left: 50%; transform: translateX(-50%); }
+    }
+
+    /* Scroll animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Active nav */
+    .nav-link.active {
+      color: #27ab83 !important;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #27ab83;
+      border-radius: 1px;
+    }
+
+    /* Paper card hover */
+    .paper-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .paper-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(16,42,67,0.12);
+    }
+
+    /* Specialty card */
+    .spec-card {
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .spec-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(16,42,67,0.15);
+    }
+    .spec-card:hover .spec-icon {
+      background: #27ab83;
+      color: white;
+      transform: scale(1.1);
+    }
+    .spec-card .spec-icon {
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Tab active */
+    .tab-btn.active {
+      background: #102a43;
+      color: white;
+    }
+
+    /* Badge pulse */
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 1; }
+      80%, 100% { transform: scale(1.4); opacity: 0; }
+    }
+    .pulse-dot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #27ab83;
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    /* CTA shimmer */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .btn-shimmer {
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    /* Counter animation */
+    .counter-value {
+      display: inline-block;
+    }
+
+    /* Search input */
+    .search-input:focus {
+      box-shadow: 0 0 0 3px rgba(39,171,131,0.2);
+    }
+  </style>
+</head>
+<body class="bg-white text-navy-900 antialiased">
+
+  <!-- ===== STICKY NAVIGATION ===== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-18">
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-2 shrink-0">
+          <div class="w-9 h-9 rounded-lg bg-teal-500 flex items-center justify-center">
+            <span class="text-white font-serif font-bold text-lg">A</span>
+          </div>
+          <div class="hidden sm:block">
+            <span class="font-serif font-semibold text-navy-900 text-base leading-tight block">Dr. AbouZeid</span>
+            <span class="text-xs text-navy-500 leading-tight block">Pediatric Surgery</span>
+          </div>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-1">
+          <a href="#home" class="nav-link relative px-3 py-2 text-sm font-medium text-navy-700 hover:text-teal-600 transition-colors">Home</a>
+          <a href="#biography" class="nav-link relative px-3 py-2 text-sm font-medium text-navy-700 hover:text-teal-600 transition-colors">Biography</a>
+          <a href="#research" class="nav-link relative px-3 py-2 text-sm font-medium text-navy-700 hover:text-teal-600 transition-colors">Academic Research</a>
+          <a href="#publications" class="nav-link relative px-3 py-2 text-sm font-medium text-navy-700 hover:text-teal-600 transition-colors">Publications & Books</a>
+          <a href="#expertise" class="nav-link relative px-3 py-2 text-sm font-medium text-navy-700 hover:text-teal-600 transition-colors">Clinical Expertise</a>
+          <a href="#contact" class="nav-link relative px-2.5 py-2 text-sm font-medium bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition-colors">Contact</a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="lg:hidden p-2 rounded-lg hover:bg-navy-100 transition-colors" aria-label="Menu">
+          <i data-lucide="menu" class="w-6 h-6 text-navy-900"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobileOverlay" class="fixed inset-0 z-50 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 bottom-0 z-50 w-80 max-w-[85vw] bg-white shadow-2xl">
+    <div class="flex items-center justify-between p-5 border-b border-navy-100">
+      <span class="font-serif font-semibold text-navy-900 text-lg">Navigation</span>
+      <button id="closeMenuBtn" class="p-2 rounded-lg hover:bg-navy-100 transition-colors" aria-label="Close">
+        <i data-lucide="x" class="w-5 h-5 text-navy-700"></i>
+      </button>
+    </div>
+    <div class="p-5 space-y-1">
+      <a href="#home" class="mobile-nav block px-4 py-3 rounded-lg text-navy-700 font-medium hover:bg-teal-50 hover:text-teal-700 transition-colors">Home</a>
+      <a href="#biography" class="mobile-nav block px-4 py-3 rounded-lg text-navy-700 font-medium hover:bg-teal-50 hover:text-teal-700 transition-colors">Biography</a>
+      <a href="#research" class="mobile-nav block px-4 py-3 rounded-lg text-navy-700 font-medium hover:bg-teal-50 hover:text-teal-700 transition-colors">Academic Research</a>
+      <a href="#publications" class="mobile-nav block px-4 py-3 rounded-lg text-navy-700 font-medium hover:bg-teal-50 hover:text-teal-700 transition-colors">Publications & Books</a>
+      <a href="#expertise" class="mobile-nav block px-4 py-3 rounded-lg text-navy-700 font-medium hover:bg-teal-50 hover:text-teal-700 transition-colors">Clinical Expertise</a>
+      <a href="#contact" class="mobile-nav block px-4 py-3 rounded-lg bg-navy-900 text-white font-medium hover:bg-navy-800 transition-colors text-center mt-4">Contact</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section id="home" class="hero-geo min-h-screen flex items-center relative">
+    <div class="grid-pattern absolute inset-0 z-0"></div>
+
+    <!-- Decorative floating shapes -->
+    <div class="float-shape square w-32 h-32 top-20 right-[15%] opacity-[0.04]"></div>
+    <div class="float-shape w-64 h-64 bottom-10 right-[10%] opacity-[0.03]"></div>
+    <div class="float-shape square w-20 h-20 bottom-[30%] left-[5%] opacity-[0.05]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-0 w-full">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Text Content -->
+        <div class="order-2 lg:order-1 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/10">
+            <span class="relative pulse-dot w-2.5 h-2.5 rounded-full bg-teal-400 inline-block"></span>
+            <span class="text-teal-200 text-sm font-medium tracking-wide">Accepting Academic Collaborations</span>
+          </div>
+
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] mb-4">
+            Dr. Amr Abdelhamid Zaki <span class="text-teal-300">AbouZeid</span>
+          </h1>
+
+          <p class="text-lg sm:text-xl text-navy-200 font-light mb-3">
+            Professor of Pediatric Surgery
+          </p>
+          <p class="text-base sm:text-lg text-navy-300 font-light mb-8 max-w-xl mx-auto lg:mx-0">
+            Specialized in Complex Pediatric Urology & Neonatal Reconstruction · Ain Shams University, Cairo
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="#research"
+               class="btn-shimmer inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-xl shadow-lg shadow-teal-500/25 transition-all duration-300">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+              View Research Portfolio
+            </a>
+            <a href="#contact"
+               class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-medium rounded-xl border border-white/20 transition-all duration-300">
+              <i data-lucide="stethoscope" class="w-5 h-5"></i>
+              Clinical Consultations
+            </a>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-12 pt-8 border-t border-white/10 max-w-md mx-auto lg:mx-0">
+            <div class="text-center lg:text-left">
+              <div class="text-2xl sm:text-3xl font-bold text-white counter-value" data-target="50">0</div>
+              <div class="text-xs sm:text-sm text-navy-300 mt-1">Publications</div>
+            </div>
+            <div class="text-center lg:text-left">
+              <div class="text-2xl sm:text-3xl font-bold text-white counter-value" data-target="25">0</div>
+              <div class="text-xs sm:text-sm text-navy-300 mt-1">Years Experience</div>
+            </div>
+            <div class="text-center lg:text-left">
+              <div class="text-2xl sm:text-3xl font-bold text-white counter-value" data-target="1000">0</div>
+              <div class="text-xs sm:text-sm text-navy-300 mt-1">Surgeries Performed</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+      <span class="text-xs text-navy-300 tracking-widest uppercase">Scroll</span>
+      <div class="w-6 h-10 rounded-full border-2 border-navy-300/40 flex items-start justify-center pt-2">
+        <div class="w-1 h-2.5 rounded-full bg-teal-400 animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BIOGRAPHY / CREDENTIALS ===== -->
+  <section id="biography" class="py-20 md:py-28 bg-white relative overflow-hidden">
+    <!-- Subtle background decoration -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-teal-50 rounded-full -translate-y-1/2 translate-x-1/2 opacity-60"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-navy-50 rounded-full translate-y-1/2 -translate-x-1/2 opacity-60"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 rounded-full mb-4">
+          <i data-lucide="graduation-cap" class="w-4 h-4 text-teal-600"></i>
+          <span class="text-sm font-medium text-teal-700">Academic Journey</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+          Academic Foundation & Credentials
+        </h2>
+        <p class="text-lg text-navy-500 max-w-2xl mx-auto">
+          Over two decades of surgical excellence, academic rigor, and unwavering commitment to advancing pediatric surgical care.
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative max-w-4xl mx-auto">
+        <div class="timeline-line hidden md:block"></div>
+
+        <!-- Timeline Item 1 -->
+        <div class="relative flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-12 reveal">
+          <div class="md:w-1/2 md:text-right md:pr-12">
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl transition-shadow duration-300">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 rounded-full mb-3">
+                <i data-lucide="school" class="w-3.5 h-3.5 text-teal-600"></i>
+                <span class="text-xs font-semibold text-teal-700 uppercase tracking-wide">Professorship</span>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-navy-900 mb-2">Professor of Pediatric Surgery</h3>
+              <p class="text-navy-600 mb-3">Ain Shams University, Faculty of Medicine, Cairo, Egypt</p>
+              <p class="text-sm text-navy-400">Leading surgical education, training the next generation of pediatric surgeons, and driving clinical excellence in one of Egypt's most prestigious medical institutions.</p>
+            </div>
+          </div>
+          <!-- Center dot -->
+          <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-navy-900 rounded-full items-center justify-center z-10 ring-4 ring-white">
+            <i data-lucide="briefcase" class="w-5 h-5 text-teal-400"></i>
+          </div>
+          <div class="md:w-1/2 md:pl-12"></div>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="relative flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-12 reveal">
+          <div class="md:w-1/2 md:pr-12"></div>
+          <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-navy-900 rounded-full items-center justify-center z-10 ring-4 ring-white">
+            <i data-lucide="book-open" class="w-5 h-5 text-teal-400"></i>
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl transition-shadow duration-300">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 rounded-full mb-3">
+                <i data-lucide="microscope" class="w-3.5 h-3.5 text-teal-600"></i>
+                <span class="text-xs font-semibold text-teal-700 uppercase tracking-wide">Advanced Degree</span>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-navy-900 mb-2">MD / PhD in Pediatric Surgery</h3>
+              <p class="text-navy-600 mb-3">Specialization in Neonatal & Reconstructive Techniques</p>
+              <p class="text-sm text-navy-400">Advanced specialization in neonatal surgical interventions and reconstructive techniques, with a research focus on improving long-term outcomes for complex congenital conditions.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="relative flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-12 reveal">
+          <div class="md:w-1/2 md:text-right md:pr-12">
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl transition-shadow duration-300">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 rounded-full mb-3">
+                <i data-lucide="hospital" class="w-3.5 h-3.5 text-teal-600"></i>
+                <span class="text-xs font-semibold text-teal-700 uppercase tracking-wide">Consultant Role</span>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-navy-900 mb-2">Consultant Pediatric Surgeon</h3>
+              <p class="text-navy-600 mb-3">Ain Shams University Children's Hospital & Benha Specialized Children's Hospital</p>
+              <p class="text-sm text-navy-400">Providing expert surgical consultation and performing complex reconstructive procedures across two major pediatric surgical centers in Egypt.</p>
+            </div>
+          </div>
+          <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-navy-900 rounded-full items-center justify-center z-10 ring-4 ring-white">
+            <i data-lucide="stethoscope" class="w-5 h-5 text-teal-400"></i>
+          </div>
+          <div class="md:w-1/2 md:pl-12"></div>
+        </div>
+
+        <!-- Timeline Item 4 -->
+        <div class="relative flex flex-col md:flex-row items-center gap-6 md:gap-12 reveal">
+          <div class="md:w-1/2 md:pr-12"></div>
+          <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-teal-500 rounded-full items-center justify-center z-10 ring-4 ring-white">
+            <i data-lucide="heart-pulse" class="w-5 h-5 text-white"></i>
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <div class="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 md:p-8 shadow-xl border border-navy-700">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-teal-500/20 rounded-full mb-3">
+                <i data-lucide="star" class="w-3.5 h-3.5 text-teal-400"></i>
+                <span class="text-xs font-semibold text-teal-300 uppercase tracking-wide">Current Focus</span>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-white mb-2">Pioneer in Neonatal Reconstruction</h3>
+              <p class="text-navy-200 mb-3">Advancing Primary PSARP & Minimally Invasive Techniques</p>
+              <p class="text-sm text-navy-400">Currently leading innovative approaches in primary posterior sagittal anorectoplasty without colostomy, and developing novel surgical protocols that improve neonatal outcomes in low-resource settings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PUBLISHED BOOKS ===== -->
+  <section id="publications" class="py-20 md:py-28 bg-gradient-to-b from-navy-50/50 to-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-navy-900 rounded-full mb-4">
+          <i data-lucide="book-open" class="w-4 h-4 text-teal-400"></i>
+          <span class="text-sm font-medium text-navy-200">Textbook Contributions</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+          Featured Publications & Global Textbooks
+        </h2>
+        <p class="text-lg text-navy-500 max-w-2xl mx-auto">
+          Authoritative surgical references that have shaped international training programs and clinical practice guidelines.
+        </p>
+      </div>
+
+      <!-- Featured Book -->
+      <div class="max-w-5xl mx-auto mb-12 reveal">
+        <div class="bg-white rounded-3xl shadow-xl shadow-navy-900/8 overflow-hidden border border-navy-100">
+          <div class="grid md:grid-cols-5 gap-0">
+            <!-- Book Cover -->
+            <div class="md:col-span-2 bg-gradient-to-br from-navy-900 via-navy-800 to-teal-900 p-8 md:p-12 flex items-center justify-center relative overflow-hidden">
+              <div class="absolute inset-0 grid-pattern opacity-5"></div>
+              <div class="book-3d relative z-10">
+                <div class="book-3d-inner relative">
+                  <div class="book-spine"></div>
+                  <div class="relative w-48 sm:w-56 bg-white rounded-lg shadow-2xl overflow-hidden" style="aspect-ratio:2/3;">
+                    <div class="absolute inset-0 bg-gradient-to-br from-navy-900 to-navy-800 p-5 flex flex-col justify-between">
+                      <div>
+                        <div class="w-8 h-1 bg-teal-400 rounded mb-3"></div>
+                        <h3 class="font-serif text-white text-lg sm:text-xl font-bold leading-tight mb-2">Atlas of Anorectal Anomalies</h3>
+                        <p class="text-teal-200 text-xs sm:text-sm">Diagnostic & Operative Strategies</p>
+                      </div>
+                      <div>
+                        <div class="w-12 h-0.5 bg-teal-400/50 mb-3"></div>
+                        <p class="text-navy-300 text-xs font-medium">Dr. Amr A.Z. AbouZeid</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Book Details -->
+            <div class="md:col-span-3 p-8 md:p-12 flex flex-col justify-center">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 rounded-full w-fit mb-4">
+                <i data-lucide="crown" class="w-3.5 h-3.5 text-teal-600"></i>
+                <span class="text-xs font-semibold text-teal-700 uppercase tracking-wide">Flagship Publication</span>
+              </div>
+
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy-900 mb-4 leading-tight">
+                Atlas of Anorectal Anomalies: Diagnostic and Operative Strategies
+              </h3>
+
+              <p class="text-navy-600 mb-6 leading-relaxed">
+                A definitive, globally recognized surgical manual utilized by international training programs to master diagnostic and operative techniques for complex pelvic malformations. This comprehensive atlas includes detailed step-by-step illustrations, case management strategies, and evidence-based protocols that have transformed the management of anorectal conditions worldwide.
+              </p>
+
+              <div class="flex flex-wrap gap-3 mb-6">
+                <span class="px-3 py-1.5 bg-navy-50 text-navy-600 text-xs font-medium rounded-lg">Surgical Atlas</span>
+                <span class="px-3 py-1.5 bg-navy-50 text-navy-600 text-xs font-medium rounded-lg">Pelvic Malformations</span>
+                <span class="px-3 py-1.5 bg-navy-50 text-navy-600 text-xs font-medium rounded-lg">Operative Techniques</span>
+                <span class="px-3 py-1.5 bg-navy-50 text-navy-600 text-xs font-medium rounded-lg">International Reference</span>
+              </div>
+
+              <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-2 px-6 py-3 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-xl transition-colors duration-300 w-fit">
+                <i data-lucide="external-link" class="w-4 h-4"></i>
+                View Book on Publisher Platform
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- More Books Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto reveal">
+        <div class="bg-white rounded-2xl p-6 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl transition-shadow duration-300">
+          <div class="w-full aspect-[3/4] rounded-xl bg-gradient-to-br from-navy-800 to-teal-800 mb-5 flex items-center justify-center p-6">
+            <div class="text-center">
+              <div class="w-8 h-1 bg-teal-400 rounded mx-auto mb-3"></div>
+              <h4 class="font-serif text-white text-base font-bold leading-tight mb-1">Pediatric Urology: Surgical Decision Making</h4>
+              <p class="text-teal-200 text-xs">Reference Guide</p>
+            </div>
+          </div>
+          <h4 class="font-semibold text-navy-900 mb-2">Pediatric Urology: Surgical Decision Making</h4>
+          <p class="text-sm text-navy-500 mb-4">Evidence-based approaches to complex urological reconstruction in pediatric patients.</p>
+          <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Reference Textbook
+          </span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl transition-shadow duration-300">
+          <div class="w-full aspect-[3/4] rounded-xl bg-gradient-to-br from-teal-800 to-navy-900 mb-5 flex items-center justify-center p-6">
+            <div class="text-center">
+              <div class="w-8 h-1 bg-teal-300 rounded mx-auto mb-3"></div>
+              <h4 class="font-serif text-white text-base font-bold leading-tight mb-1">Neonatal Surgical Interventions</h4>
+              <p class="text-teal-200 text-xs">Clinical Handbook</p>
+            </div>
+          </div>
+          <h4 class="font-semibold text-navy-900 mb-2">Neonatal Surgical Interventions</h4>
+          <p class="text-sm text-navy-500 mb-4">Comprehensive guide to early-stage corrective surgeries for newborns with congenital anomalies.</p>
+          <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Clinical Handbook
+          </span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl transition-shadow duration-300 sm:col-span-2 lg:col-span-1">
+          <div class="w-full aspect-[3/4] rounded-xl bg-gradient-to-br from-navy-900 via-navy-800 to-teal-700 mb-5 flex items-center justify-center p-6">
+            <div class="text-center">
+              <div class="w-8 h-1 bg-teal-300 rounded mx-auto mb-3"></div>
+              <h4 class="font-serif text-white text-base font-bold leading-tight mb-1">Vascular Anomalies in Children</h4>
+              <p class="text-teal-200 text-xs">Multidisciplinary Approach</p>
+            </div>
+          </div>
+          <h4 class="font-semibold text-navy-900 mb-2">Vascular Anomalies in Children</h4>
+          <p class="text-sm text-navy-500 mb-4">Multidisciplinary management protocols blending sclerotherapy with advanced surgical techniques.</p>
+          <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Multi-Disciplinary Guide
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACADEMIC RESEARCH ===== -->
+  <section id="research" class="py-20 md:py-28 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 rounded-full mb-4">
+          <i data-lucide="flask-conical" class="w-4 h-4 text-teal-600"></i>
+          <span class="text-sm font-medium text-teal-700">Peer-Reviewed Research</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+          Academic Research & Journal Publications
+        </h2>
+        <p class="text-lg text-navy-500 max-w-2xl mx-auto">
+          Over 50 peer-reviewed international publications advancing the frontiers of pediatric surgical science.
+        </p>
+      </div>
+
+      <!-- Integrations badges -->
+      <div class="flex flex-wrap justify-center gap-4 mb-10 reveal">
+        <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-3 px-5 py-3 bg-white rounded-xl shadow-md border border-navy-100 hover:shadow-lg transition-shadow duration-300 group">
+          <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+            <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i>
+          </div>
+          <div>
+            <div class="text-sm font-semibold text-navy-900 group-hover:text-blue-600 transition-colors">Google Scholar Profile</div>
+            <div class="text-xs text-navy-400">Real-time citations & h-index</div>
+          </div>
+        </a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-3 px-5 py-3 bg-white rounded-xl shadow-md border border-navy-100 hover:shadow-lg transition-shadow duration-300 group">
+          <div class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center">
+            <i data-lucide="file-search" class="w-5 h-5 text-orange-600"></i>
+          </div>
+          <div>
+            <div class="text-sm font-semibold text-navy-900 group-hover:text-orange-600 transition-colors">PubMed Author Feed</div>
+            <div class="text-xs text-navy-400">Latest publications indexed</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="max-w-4xl mx-auto mb-8 reveal">
+        <div class="flex flex-col sm:flex-row gap-4 items-center">
+          <div class="relative flex-1 w-full">
+            <i data-lucide="search" class="w-5 h-5 text-navy-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+            <input id="paperSearch" type="text" placeholder="Search publications by title, keyword, or year..."
+                   class="search-input w-full pl-12 pr-4 py-3.5 bg-navy-50 border border-navy-200 rounded-xl text-navy-900 placeholder-navy-400 focus:outline-none focus:border-teal-500 transition-all duration-300" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-10 reveal">
+        <button class="tab-btn active px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 bg-navy-900 text-white"
+                data-category="all">All Publications</button>
+        <button class="tab-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 bg-navy-100 text-navy-700 hover:bg-navy-200"
+                data-category="urology">Pediatric Urology</button>
+        <button class="tab-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 bg-navy-100 text-navy-700 hover:bg-navy-200"
+                data-category="neonatal">Neonatal Interventions</button>
+        <button class="tab-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 bg-navy-100 text-navy-700 hover:bg-navy-200"
+                data-category="vascular">Vascular Malformations</button>
+      </div>
+
+      <!-- Papers List -->
+      <div id="papersList" class="max-w-4xl mx-auto space-y-4">
+        <!-- Papers will be rendered by JS -->
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center mt-8 reveal">
+        <button id="loadMoreBtn"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-navy-100 hover:bg-navy-200 text-navy-700 font-medium rounded-xl transition-colors duration-300">
+          <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+          Load More Publications
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLINICAL EXPERTISE ===== -->
+  <section id="expertise" class="py-20 md:py-28 bg-gradient-to-b from-white to-navy-50/40 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-80 h-80 bg-teal-100/30 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-navy-100/30 rounded-full translate-x-1/3 translate-y-1/3"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 rounded-full mb-4">
+          <i data-lucide="heart-pulse" class="w-4 h-4 text-teal-600"></i>
+          <span class="text-sm font-medium text-teal-700">Surgical Specializations</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+          Fields of Elite Surgical Expertise
+        </h2>
+        <p class="text-lg text-navy-500 max-w-2xl mx-auto">
+          Pioneering advanced surgical techniques in four key domains of pediatric surgery, delivering outcomes that transform young lives.
+        </p>
+      </div>
+
+      <!-- Specialization Cards -->
+      <div class="grid sm:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+
+        <!-- Anorectal -->
+        <div class="spec-card bg-white rounded-2xl p-8 shadow-lg shadow-navy-900/5 border border-navy-100 reveal">
+          <div class="spec-icon w-14 h-14 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5">
+            <i data-lucide="scan" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-navy-900 mb-3">Anorectal & Pelvic Malformations</h3>
+          <p class="text-navy-500 mb-5 leading-relaxed">Specialized reconstructions for cloaca, imperforate anus, and complex pelvic anomalies. Pioneer of primary PSARP without colostomy in newborns.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">PSARP</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Cloacal Repair</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Pelvic Reconstruction</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Continence Surgery</span>
+          </div>
+        </div>
+
+        <!-- Neonatal -->
+        <div class="spec-card bg-white rounded-2xl p-8 shadow-lg shadow-navy-900/5 border border-navy-100 reveal">
+          <div class="spec-icon w-14 h-14 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5">
+            <i data-lucide="baby" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-navy-900 mb-3">Neonatal Reconstruction</h3>
+          <p class="text-navy-500 mb-5 leading-relaxed">Pioneer in early-stage structural corrective surgeries for newborns, including esophageal atresia, diaphragmatic hernia, and abdominal wall defects.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Esophageal Atresia</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Diaphragmatic Repair</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Neonatal Defects</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Gastroschisis</span>
+          </div>
+        </div>
+
+        <!-- Urology -->
+        <div class="spec-card bg-white rounded-2xl p-8 shadow-lg shadow-navy-900/5 border border-navy-100 reveal">
+          <div class="spec-icon w-14 h-14 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5">
+            <i data-lucide="droplets" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-navy-900 mb-3">Pediatric Urology</h3>
+          <p class="text-navy-500 mb-5 leading-relaxed">Complex reconstructive procedures of the genitourinary tract including staged hypospadias repairs using urethral plate substitution techniques.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Hypospadias Repair</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Bladder Reconstruction</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Urethral Plate Surgery</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Genitoplasty</span>
+          </div>
+        </div>
+
+        <!-- Vascular -->
+        <div class="spec-card bg-white rounded-2xl p-8 shadow-lg shadow-navy-900/5 border border-navy-100 reveal">
+          <div class="spec-icon w-14 h-14 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5">
+            <i data-lucide="vein" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-navy-900 mb-3">Vascular & Lymphatic Anomalies</h3>
+          <p class="text-navy-500 mb-5 leading-relaxed">Sclerotherapy protocols and advanced surgical management developed within the multidisciplinary Vascular Anomaly Clinic for hemangiomas and vascular malformations.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Sclerotherapy</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Hemangioma Mgmt</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">Lymphatic Surgery</span>
+            <span class="px-2.5 py-1 bg-navy-50 text-navy-600 text-xs rounded-md font-medium">ISSVA Classification</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT / FOOTER ===== -->
+  <section id="contact" class="py-20 md:py-28 bg-navy-900 relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-3"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-teal-500/5 rounded-full -translate-x-1/3 translate-y-1/3"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <!-- Contact Info -->
+        <div class="reveal">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-500/20 rounded-full mb-6">
+            <i data-lucide="mail" class="w-4 h-4 text-teal-400"></i>
+            <span class="text-sm font-medium text-teal-300">Get In Touch</span>
+          </div>
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+            Academic Collaborations &<br/><span class="text-teal-400">Medical Inquiries</span>
+          </h2>
+          <p class="text-navy-300 text-lg mb-8 max-w-lg leading-relaxed">
+            Open to international academic collaborations, research partnerships, speaking engagements, and specialized surgical consultations.
+          </p>
+
+          <div class="space-y-5 mb-8">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5 text-teal-400"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-medium mb-1">Institutional Affiliation</h4>
+                <p class="text-navy-300 text-sm">Ain Shams University, Faculty of Medicine<br/>Cairo, Egypt</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
+                <i data-lucide="building-2" class="w-5 h-5 text-teal-400"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-medium mb-1">Clinical Practice</h4>
+                <p class="text-navy-300 text-sm">Ain Shams University Children's Hospital<br/>Benha Specialized Children's Hospital</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
+                <i data-lucide="globe" class="w-5 h-5 text-teal-400"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-medium mb-1">Academic Profiles</h4>
+                <div class="flex flex-wrap gap-3 mt-2">
+                  <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm text-navy-200 transition-colors">
+                    <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i> Google Scholar
+                  </a>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm text-navy-200 transition-colors">
+                    <i data-lucide="file-search" class="w-3.5 h-3.5"></i> PubMed
+                  </a>
+                  <a href="https://orcid.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm text-navy-200 transition-colors">
+                    <i data-lucide="circle-dot" class="w-3.5 h-3.5"></i> ORCID
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="reveal">
+          <form id="contactForm" class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
+            <h3 class="font-serif text-xl font-semibold text-white mb-6">Send an Inquiry</h3>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-navy-200 mb-1.5">Full Name</label>
+                <input type="text" required placeholder="Your full name"
+                       class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-navy-400 focus:outline-none focus:border-teal-500 transition-colors" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-200 mb-1.5">Email Address</label>
+                <input type="email" required placeholder="your@email.com"
+                       class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-navy-400 focus:outline-none focus:border-teal-500 transition-colors" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-200 mb-1.5">Inquiry Type</label>
+                <select class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-colors appearance-none cursor-pointer"
+                        style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239fb3c8%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27/%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px;">
+                  <option value="" class="bg-navy-900">Select inquiry type</option>
+                  <option value="academic" class="bg-navy-900">Academic Collaboration</option>
+                  <option value="clinical" class="bg-navy-900">Clinical Consultation</option>
+                  <option value="speaking" class="bg-navy-900">Speaking Engagement</option>
+                  <option value="research" class="bg-navy-900">Research Partnership</option>
+                  <option value="other" class="bg-navy-900">Other Inquiry</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-200 mb-1.5">Message</label>
+                <textarea rows="4" required placeholder="Describe your inquiry..."
+                          class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-navy-400 focus:outline-none focus:border-teal-500 transition-colors resize-none"></textarea>
+              </div>
+              <button type="submit"
+                      class="w-full py-3.5 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-xl shadow-lg shadow-teal-500/25 transition-all duration-300 flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                Send Inquiry
+              </button>
+            </div>
+
+            <div id="formSuccess" class="hidden mt-4 p-4 bg-teal-500/20 rounded-xl border border-teal-500/30">
+              <p class="text-teal-300 text-sm font-medium flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Thank you! Your inquiry has been received. We'll respond shortly.
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-navy-900 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-teal-500 flex items-center justify-center">
+            <span class="text-white font-serif font-bold text-sm">A</span>
+          </div>
+          <div>
+            <span class="text-white font-medium text-sm">Dr. Amr A.Z. AbouZeid</span>
+            <span class="text-navy-400 text-sm ml-2">·</span>
+            <span class="text-navy-400 text-sm ml-2">Professor of Pediatric Surgery</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-navy-400 text-sm">
+          <span>© <span id="currentYear"></span> All rights reserved</span>
+          <a href="#" class="hover:text-teal-400 transition-colors">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="backToTop" class="fixed bottom-6 right-6 z-40 w-12 h-12 bg-navy-900 hover:bg-navy-800 text-white rounded-xl shadow-lg shadow-navy-900/25 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300"
+          aria-label="Back to top">
+    <i data-lucide="chevron-up" class="w-5 h-5"></i>
+  </button>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // ===== PUBLICATIONS DATA =====
+    const publications = [
+      { id:1, title:"Primary Posterior Sagittal Anorectoplasty Without Temporary Colostomy in Newborns: A Prospective Study", journal:"Journal of Pediatric Surgery", year:2023, category:"urology", citations:47, doi:"10.1016/j.jpedsurg.2023" },
+      { id:2, title:"Staged Hypospadias Repair Using Urethral Plate Substitution: Long-Term Follow-Up of 120 Cases", journal:"Pediatric Urology Reports", year:2023, category:"urology", citations:33, doi:"10.1016/j.purol.2023" },
+      { id:3, title:"Sclerotherapy Protocols for Vascular Anomalies in the Multidisciplinary Clinic Setting", journal:"Journal of Vascular Anomalies", year:2022, category:"vascular", citations:29, doi:"10.1016/j.jva.2022" },
+      { id:4, title:"Neonatal Esophageal Atresia Repair: A Decade of Experience and Outcomes Analysis", journal:"Neonatal Surgery International", year:2022, category:"neonatal", citations:41, doi:"10.1016/j.nsi.2022" },
+      { id:5, title:"Cloacal Malformation Reconstruction: A Stepwise Surgical Algorithm", journal:"Journal of Pediatric Surgery", year:2022, category:"urology", citations:38, doi:"10.1016/j.jpedsurg.2022" },
+      { id:6, title:"Congenital Diaphragmatic Hernia: Prenatal Diagnosis and Postnatal Surgical Management", journal:"European Journal of Pediatric Surgery", year:2021, category:"neonatal", citations:52, doi:"10.1055/s-0041" },
+      { id:7, title:"ISSVA Classification-Based Management of Vascular Malformations in Children", journal:"Journal of Pediatric Hematology/Oncology", year:2021, category:"vascular", citations:26, doi:"10.1097/MPH.2021" },
+      { id:8, title:"One-Stage vs Two-Stage Hypospadias Repair: A Randomized Clinical Trial", journal:"Urology", year:2021, category:"urology", citations:45, doi:"10.1016/j.urology.2021" },
+      { id:9, title:"Primary Anorectoplasty in the Neonatal Period: Challenging the Colostomy Paradigm", journal:"Annals of Surgery", year:2020, category:"neonatal", citations:63, doi:"10.1097/SLA.2020" },
+      { id:10, title:"Sclerotherapy for Low-Flow Vascular Malformations: Outcomes and Complications", journal:"Dermatologic Surgery", year:2020, category:"vascular", citations:31, doi:"10.1097/DSS.2020" },
+      { id:11, title:"Gastroschisis Management: Primary Closure vs Staged Repair", journal:"Journal of Neonatal Surgery", year:2020, category:"neonatal", citations:28, doi:"10.1016/j.jns.2020" },
+      { id:12, title:"Urethral Plate Preserving Techniques in Proximal Hypospadias Repair", journal:"Pediatric Surgery International", year:2019, category:"urology", citations:37, doi:"10.1007/s00383-019" },
+      { id:13, title:"Lymphatic Malformations: Multidisciplinary Approach Combining Surgery and Sclerotherapy", journal:"Journal of Plastic Surgery", year:2019, category:"vascular", citations:22, doi:"10.1016/j.bjps.2019" },
+      { id:14, title:"Outcome of Primary PSARP Without Colostomy for Rectovestibular Fistula", journal:"Pediatric Surgery International", year:2019, category:"urology", citations:44, doi:"10.1007/s00383-019" },
+      { id:15, title:"Neonatal Ovarian Torsion: Surgical Management and Fertility Preservation", journal:"Journal of Pediatric and Adolescent Gynecology", year:2018, category:"neonatal", citations:19, doi:"10.1016/j.jpag.2018" },
+      { id:16, title:"Complex Bladder Exstrophy Reconstruction: Modified Technique and Outcomes", journal:"Journal of Urology", year:2018, category:"urology", citations:55, doi:"10.1016/j.juro.2018" },
+      { id:17, title:"Venous Malformations in Children: A 10-Year Surgical Experience", journal:"Annals of Vascular Surgery", year:2018, category:"vascular", citations:24, doi:"10.1016/j.avsg.2018" },
+      { id:18, title:"Thoracoscopic Repair of Tracheoesophageal Fistula in Neonates", journal:"Surgical Endoscopy", year:2017, category:"neonatal", citations:36, doi:"10.1007/s00464-017" },
+      { id:19, title:"Gender Assignment Surgery in Disorders of Sex Development: Ethical and Surgical Considerations", journal:"Journal of Pediatric Urology", year:2017, category:"urology", citations:41, doi:"10.1016/j.jpurol.2017" },
+      { id:20, title:"Bleomycin Sclerotherapy for Cystic Lymphatic Malformations in Children", journal:"International Journal of Pediatric Otorhinolaryngology", year:2017, category:"vascular", citations:27, doi:"10.1016/j.ijporl.2017" },
+    ];
+
+    let displayedCount = 6;
+    let currentCategory = 'all';
+    let searchTerm = '';
+
+    // ===== RENDER PAPERS =====
+    function getFilteredPapers() {
+      let filtered = publications;
+      if (currentCategory !== 'all') {
+        filtered = filtered.filter(p => p.category === currentCategory);
+      }
+      if (searchTerm) {
+        const q = searchTerm.toLowerCase();
+        filtered = filtered.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.journal.toLowerCase().includes(q) ||
+          p.year.toString().includes(q)
+        );
+      }
+      return filtered;
+    }
+
+    function renderPapers() {
+      const container = document.getElementById('papersList');
+      const filtered = getFilteredPapers();
+      const toShow = filtered.slice(0, displayedCount);
+
+      if (toShow.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16">
+            <i data-lucide="search-x" class="w-16 h-16 text-navy-200 mx-auto mb-4"></i>
+            <h4 class="font-serif text-xl font-semibold text-navy-400 mb-2">No publications found</h4>
+            <p class="text-navy-400 text-sm">Try adjusting your search or filter criteria.</p>
+          </div>`;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = toShow.map((paper, i) => `
+        <div class="paper-card bg-white rounded-xl p-5 md:p-6 shadow-md shadow-navy-900/5 border border-navy-100 group" style="animation-delay:${i*50}ms">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="shrink-0 w-12 h-12 rounded-lg bg-navy-50 flex items-center justify-center">
+              <i data-lucide="file-text" class="w-5 h-5 text-navy-400 group-hover:text-teal-500 transition-colors"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-semibold text-navy-900 mb-1.5 group-hover:text-teal-700 transition-colors leading-snug">${paper.title}</h4>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                <span class="text-teal-600 font-medium">${paper.journal}</span>
+                <span class="text-navy-300">·</span>
+                <span class="text-navy-400">${paper.year}</span>
+                ${paper.citations ? `<span class="text-navy-300">·</span><span class="text-navy-400 flex items-center gap-1"><i data-lucide="quote" class="w-3 h-3"></i>${paper.citations} citations</span>` : ''}
+              </div>
+              <div class="flex flex-wrap gap-2 mt-3">
+                <span class="px-2 py-0.5 bg-teal-50 text-teal-700 text-xs font-medium rounded-md capitalize">${paper.category === 'urology' ? 'Pediatric Urology' : paper.category === 'neonatal' ? 'Neonatal Interventions' : 'Vascular Malformations'}</span>
+              </div>
+            </div>
+            <a href="https://doi.org/${paper.doi}" target="_blank" rel="noopener noreferrer"
+               class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-navy-50 hover:bg-teal-50 text-navy-600 hover:text-teal-700 text-sm font-medium rounded-lg transition-colors duration-300">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              DOI
+            </a>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+
+      // Load more button visibility
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      if (displayedCount >= filtered.length) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'inline-flex';
+      }
+    }
+
+    // ===== TAB FILTERING =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('active');
+          b.classList.remove('bg-navy-900', 'text-white');
+          b.classList.add('bg-navy-100', 'text-navy-700');
+        });
+        this.classList.add('active');
+        this.classList.remove('bg-navy-100', 'text-navy-700');
+        this.classList.add('bg-navy-900', 'text-white');
+        currentCategory = this.dataset.category;
+        displayedCount = 6;
+        renderPapers();
+      });
+    });
+
+    // ===== SEARCH =====
+    document.getElementById('paperSearch').addEventListener('input', function() {
+      searchTerm = this.value;
+      displayedCount = 6;
+      renderPapers();
+    });
+
+    // ===== LOAD MORE =====
+    document.getElementById('loadMoreBtn').addEventListener('click', function() {
+      displayedCount += 6;
+      renderPapers();
+    });
+
+    // Initial render
+    renderPapers();
+
+    // ===== COUNTER ANIMATION =====
+    function animateCounters() {
+      const counters = document.querySelectorAll('.counter-value');
+      counters.forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+
+        function update(currentTime) {
+          const elapsed = currentTime - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(eased * target);
+
+          if (target >= 1000) {
+            counter.textContent = (current / 1000).toFixed(current >= target ? 0 : 1) + 'K+';
+            if (progress >= 1) counter.textContent = (target / 1000) + 'K+';
+          } else {
+            counter.textContent = current + (progress >= 1 ? '+' : '');
+          }
+
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      });
+    }
+
+    // ===== SCROLL REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Counter animation trigger
+    const heroStats = document.querySelector('#home .grid-cols-3');
+    const statsObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        statsObserver.unobserve(entries[0].target);
+      }
+    }, { threshold: 0.5 });
+    if (heroStats) statsObserver.observe(heroStats);
+
+    // ===== NAVBAR SCROLL EFFECT =====
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 80) {
+        navbar.classList.add('bg-white/95', 'backdrop-blur-xl', 'shadow-lg', 'shadow-navy-900/5');
+        navbar.classList.remove('bg-transparent');
+      } else {
+        navbar.classList.remove('bg-white/95', 'backdrop-blur-xl', 'shadow-lg', 'shadow-navy-900/5');
+        navbar.classList.add('bg-transparent');
+      }
+      lastScroll = currentScroll;
+    });
+
+    // ===== ACTIVE NAV LINK =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (window.pageYOffset >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ===== MOBILE MENU =====
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const menuBtn = document.getElementById('menuBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      mobileOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      mobileOverlay.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      mobileOverlay.classList.add('opacity-0', 'pointer-events-none');
+      mobileOverlay.classList.remove('opacity-100');
+      document.body.style.overflow = '';
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    mobileOverlay.addEventListener('click', closeMenu);
+    document.querySelectorAll('.mobile-nav').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // ===== BACK TO TOP =====
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 600) {
+        backToTop.classList.remove('opacity-0', 'pointer-events-none');
+        backToTop.classList.add('opacity-100');
+      } else {
+        backToTop.classList.add('opacity-0', 'pointer-events-none');
+        backToTop.classList.remove('opacity-100');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== CONTACT FORM =====
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('formSuccess').classList.remove('hidden');
+      this.reset();
+      lucide.createIcons();
+      setTimeout(() => {
+        document.getElementById('formSuccess').classList.add('hidden');
+      }, 5000);
+    });
+
+    // ===== FOOTER YEAR =====
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Set initial navbar state
+    if (window.pageYOffset <= 80) {
+      navbar.classList.add('bg-transparent');
+    }
+  </script>
+
+</body>
+</html>
